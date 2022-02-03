@@ -1,0 +1,25 @@
+{{- if and .Values.persistence.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: public
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.persistence.hostPath }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: {{ .Values.persistence.extraVolumeClaims.public.storageClass }}
+  {{- end }}
+
+  accessModes:
+    - {{ .Values.persistence.extraVolumeClaims.public.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.extraVolumeClaims.public.size | quote }}
+{{- end -}}
