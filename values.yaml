@@ -1,0 +1,37 @@
+persistence:
+  enabled: true
+  extraVolumeClaims:
+    public:
+      storageClass: px-sharedv4-sc
+      accessMode: ReadWriteMany
+      size: 2Gi
+      
+extraVolumes:
+  - name: public
+    persistentVolumeClaim:
+      claimName: public      
+      
+sidecars:
+  - name: nginx
+    image: image/m2:latest
+    volumeMounts:
+    - mountPath: /var/www/html/public
+      name: public      
+
+initContainers:
+
+  - name: sync-volume
+    image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    securityContext:
+      runAsUser: 0
+    command: ["/bin/sh"]
+    args:
+    - -c
+    - |
+      {{- if .Values.externalConfigs.scripts.init_command_sh }}
+      {{ tpl .Values.externalConfigs.scripts.init_command_sh . | nindent 4 }}
+      {{- end }}
+
+    volumeMounts:
+      - name: public
+        mountPath: /tmp/public
