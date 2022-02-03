@@ -7,6 +7,8 @@ kubernetes sidecar container ile php container arasındaki volume iceriginin pay
 - Sidecar olarak deploy edilen podlar arasında ilgili alani volume olarak baglanmistir,
 - Bu islem icin, init container kullanılmistir,
 
+![This is an image](https://mertyakan.com/wp-content/uploads/2022/02/Screen-Shot-2022-02-03-at-07.20.22.png)
+
 # 
 Ozetle init container'in bu stratejideki gorevi php uzerindeki css dosyasının bulundugu dizini kendi uzerinde /tmp/X alanında yada sizin belirleyeceginiz herhangi bir alanda rsync ile dosyaları kopyalamasi, init container'a baglanan volume uzerine esitlemesi olarak tanımlayabiliriz. Sonrasında bu volume'u nginx uzerine baglayarak ilgili alandaki css dosyasına erismesini saglayacagiz.
 
