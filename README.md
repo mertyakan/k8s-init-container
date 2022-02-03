@@ -143,5 +143,11 @@ rsync -avc /var/www/html/public/ /tmp/public/
 EOF
 ```
 
+#
 
- 
+helm install command;
+
+```sh
+helm upgrade --install --create-namespace -n mert-akeneo mert-akeneo akeneo/ --set ingress.enabled=false --set-file externalConfigs.nginx.nginx_conf=externalConfigs/nginx/nginx.conf --set-file externalConfigs.nginx.nginx_conf_sample=externalConfigs/nginx/nginx.conf.sample --set-file externalConfigs.nginx.default_conf=externalConfigs/nginx/default.conf,externalConfigs.envVars.envVars=externalConfigs/envVars/envVars,externalConfigs.scripts.init_command_sh=externalConfigs/scripts/init_command.sh -f externalConfigs/mysql/mysql-values.yaml
+```
+#
