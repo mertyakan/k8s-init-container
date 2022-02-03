@@ -16,7 +16,7 @@ spec:
   {{- else }}
   storageClassName: {{ .Values.persistence.extraVolumeClaims.public.storageClass }}
   {{- end }}
-
+  
   accessModes:
     - {{ .Values.persistence.extraVolumeClaims.public.accessMode | quote }}
   resources:
